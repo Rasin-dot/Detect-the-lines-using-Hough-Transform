@@ -88,16 +88,21 @@ plt.axis('off')
 
 ### Display the result of Hough transform
 ```
-lines = cv2.HoughLinesP(edges, rho=1, theta=np.pi/180, threshold=100, minLineLength=50, maxLineGap=10)
-output_image = image.copy()
+# Step 5: Using the HoughLinesP(), detect line coordinates for every point in the image
+# The parameters of HoughLinesP are: image, resolution, threshold, minLineLength, maxLineGap
+lines = cv2.HoughLinesP(edges, 1, np.pi / 180, 100, minLineLength=50, maxLineGap=10)
 
-if lines is not None:
-    for line in lines:
-        x1, y1, x2, y2 = line[0]
-        cv2.line(output_image, (x1, y1), (x2, y2), (0, 255, 0), 2)
-plt.imshow(cv2.cvtColor(output_image, cv2.COLOR_BGR2RGB))
-plt.title('Hough Transform - Line Detection')
+# Step 6: Using a for loop, draw the lines on the original image using the detected coordinates
+# The lines variable contains the endpoints of the detected lines
+for line in lines:
+    x1, y1, x2, y2 = line[0]  # Unpacking the line coordinates
+    cv2.line(image, (x1, y1), (x2, y2), (0, 255, 0), 2)  # Draw green lines with thickness of 2
+
+# Display the result of Hough Transform (Image with lines)
+plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))  # Image with lines drawn
+plt.title("Result of Hough Transform")
 plt.axis('off')
+
 
 ```
 <img width="719" height="563" alt="image" src="https://github.com/user-attachments/assets/d400bb7a-9c91-4a96-8d6f-854c748306f9" />
